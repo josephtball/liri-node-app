@@ -1,1 +1,4 @@
-console.log("liri has ran");
+// node packages
+var twitter = require("twitter");
+var spotify = require("spotify");
+var request = require("request");
