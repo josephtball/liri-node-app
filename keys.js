@@ -1,5 +1,3 @@
-console.log('this is loaded');
-
 exports.twitterKeys = {
 	consumer_key: 'h3cYF91gD91na7v7jiZdfAVGX',
 	consumer_secret: '78XjiYwpWsS4ayT32yUYDZps3yBo4FVf77wXqjjIAVXoG02cdp',
