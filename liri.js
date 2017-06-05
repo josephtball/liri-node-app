@@ -2,6 +2,7 @@
 var twitter = require("twitter");
 var spotify = require("spotify");
 var request = require("request");
+var fs = require("fs");
 
 var keys = require("./keys.js");
 //console.log(keys);
@@ -68,7 +69,33 @@ var commands = {
 		}
 	},
 	readFile: function() {
-		console.log("Work in progress");
+		fs.readFile("random.txt", "utf8", function(err, data) {
+			if (!err) {
+				command = data.split(",", 1);
+				command = command[0];
+
+				var start = data.indexOf('"')+1;
+				var end = data.lastIndexOf('"');
+				title = data.substring(start, end);
+
+				switch (command) {
+					case "my-tweets":
+						commands.tweets();
+						break;
+					case "spotify-this-song":
+						commands.spotify();
+						break;
+					case "movie-this":
+						commands.OMDb();
+						break;
+					default:
+						console.log("No valid command found in random.txt");
+				};
+
+			} else {
+				console.log("Error: "+error);
+			}
+		});
 	},
 };
 
