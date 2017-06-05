@@ -4,3 +4,6 @@ exports.twitterKeys = {
 	access_token_key: '870441005778173952-jvvyVuljFFNi3LsRLNybKMKyRTCFkPG',
 	access_token_secret: 'pJZQrMkGPmpUyYYBxnt3VG9WJMSyxipo8rog3NixWGIgI',
 }
+
+exports.OMDbKey = "40e9cece";
+

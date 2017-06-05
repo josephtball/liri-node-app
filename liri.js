@@ -4,7 +4,11 @@ var spotify = require("spotify");
 var request = require("request");
 
 var keys = require("./keys.js");
+//console.log(keys);
 var command = process.argv[2];
+var title = process.argv;
+title.splice(0, 3);
+title = title.join("+");
 
 var commands = {
 	tweets: function() {
@@ -13,29 +17,74 @@ var commands = {
 
 		client.get("statuses/user_timeline", params, function(error, tweets, response) {
 			if (!error) {
+				console.log("Tweets:");
 				for (var i = 0; i < tweets.length; i++) {
-					console.log(tweets[i].text);
+					console.log(" "+tweets[i].text);
 				}
 			} else {
 				console.log("Error: "+error);
 			}
 		});	
 	},
-}
+	spotify: function()  {
+		console.log("Work in progress");
+	},
+	OMDb: function() {
+		var key = keys.OMDbKey;
+
+		if (!title) {
+			request("http://www.omdbapi.com/?apikey="+key+"&t=mr+nobody&type=movie", function(error, response, movie) {
+				if (!error) {
+					movie = JSON.parse(movie);
+					console.log("Title: "+movie.Title);
+					console.log("Released: "+movie.Year);
+					console.log("IMDB rating: "+movie.imdbRating);
+					console.log("Country: "+movie.Country);
+					console.log("Language: "+movie.Language);
+					console.log("Plot: "+movie.Plot);
+					console.log("Actors: "+movie.Actors);
+					console.log("Rotten Tomatoes Link: https://www.rottentomatoes.com/m/mr_nobody");
+				} else {
+					console.log("Error: "+error);
+				}
+			});
+		} else {
+			request("http://www.omdbapi.com/?apikey="+key+"&t="+title+"&type=movie", function(error, response, movie) {
+				if (!error) {
+					movie = JSON.parse(movie);
+					console.log("Title: "+movie.Title);
+					console.log("Released: "+movie.Year);
+					console.log("IMDB rating: "+movie.imdbRating);
+					console.log("Country: "+movie.Country);
+					console.log("Language: "+movie.Language);
+					console.log("Plot: "+movie.Plot);
+					console.log("Actors: "+movie.Actors);
+					title = title.replace("+", "_");
+					console.log("Rotten Tomatoes Link: https://www.rottentomatoes.com/m/"+title);
+				} else {
+					console.log("Error: "+error);
+				}
+			});
+		}
+	},
+	readFile: function() {
+		console.log("Work in progress");
+	},
+};
 
 switch (command) {
 	case "my-tweets":
 		commands.tweets();
 		break;
 	case "spotify-this-song":
-
+		commands.spotify();
 		break;
 	case "movie-this":
-
+		commands.OMDb();
 		break;
 	case "do-what-it-says":
-
+		commands.readFile();
 		break;
 	default:
 		console.log("Valid commands: \"my-tweets\", \"spotify-this-song '<song name here>'\", \"movie-this '<movie name here>'\", or \"do-what-it-says\".")
-}
+};
