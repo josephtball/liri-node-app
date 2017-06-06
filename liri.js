@@ -1,6 +1,6 @@
 // node packages
-var twitter = require("twitter");
-var spotify = require("spotify");
+var Twitter = require("twitter");
+var Spotify = require("node-spotify-api");
 var request = require("request");
 var fs = require("fs");
 
@@ -13,7 +13,7 @@ title = title.join("+");
 
 var commands = {
 	tweets: function() {
-		var client = new twitter (keys.twitterKeys);
+		var client = new Twitter (keys.twitterKeys);
 		var params = {screen_name: 'Mr_WebDev321', count: "20"};
 
 		client.get("statuses/user_timeline", params, function(error, tweets, response) {
@@ -28,7 +28,30 @@ var commands = {
 		});	
 	},
 	spotify: function()  {
-		console.log("Work in progress");
+		var spotify = new Spotify(keys.spotifyKeys);
+
+		if (!title) {
+			spotify.search({type: "track", query: "The Sign"}, function(err, data) {
+				if (err) {
+					return console.log("Error: "+err);
+				}
+				console.log(JSON.stringify(data));
+				console.log("Artist(s): "+data.tracks.items[0].artists[0].name);
+				console.log("Song: "+data.tracks.items[0].name);
+				console.log("Preview: "+data.tracks.items[0].preview_url);
+				console.log("Album: "+data.tracks.items[0].album.name);
+			});
+		} else {
+			spotify.search({type: "track", query: title}, function(err, data) {
+				if (err) {
+					return console.log("Error: "+err);
+				}
+				console.log("Artist(s): "+data.tracks.items[0].artists[0].name);
+				console.log("Song: "+data.tracks.items[0].name);
+				console.log("Preview: "+data.tracks.items[0].preview_url);
+				console.log("Album: "+data.tracks.items[0].album.name);
+			});
+		}
 	},
 	OMDb: function() {
 		var key = keys.OMDbKey;
