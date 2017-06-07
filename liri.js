@@ -71,14 +71,14 @@ var commands = {
 				console.log("Album: "+data.tracks.items[0].album.name);
 
 				// create object to be used by AppendData constructor
-				var spotifiyData = {
+				var spotifyData = {
 					artists: data.tracks.items[0].artists[0].name,
 					song: data.tracks.items[0].name,
 					preview: data.tracks.items[0].preview_url,
 					album: data.tracks.items[0].album.name,
 				};
 				// construct object to be written to log.txt
-				appendData = new AppendData(err, null, spotifiyData);
+				appendData = new AppendData(err, null, spotifyData);
 				fs.appendFile("log.txt", JSON.stringify(appendData)+"\n", "utf8", function(err) {
 					if (err) {
 						console.log("Append to log.txt has incontered an error: "+err);
@@ -98,14 +98,14 @@ var commands = {
 				console.log("Album: "+data.tracks.items[0].album.name);
 
 				// create object to be used by AppendData constructor
-				var spotifiyData = {
+				var spotifyData = {
 					artists: data.tracks.items[0].artists[0].name,
 					song: data.tracks.items[0].name,
 					preview: data.tracks.items[0].preview_url,
 					album: data.tracks.items[0].album.name,
 				};
 				// construct object to be written to log.txt
-				appendData = new AppendData(err, null, spotifiyData);
+				appendData = new AppendData(err, null, spotifyData);
 				fs.appendFile("log.txt", JSON.stringify(appendData)+"\n", "utf8", function(err) {
 					if (err) {
 						console.log("Append to log.txt has incontered an error: "+err);
